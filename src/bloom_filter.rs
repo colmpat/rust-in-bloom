@@ -22,14 +22,14 @@ impl BloomFilter {
     }
 
     // adds the string to the set
-    pub fn put<T: Hash>(&mut self, val: T) {
+    pub fn put<T: Hash>(&mut self, val: &T) {
         for hash in self.hash(val) {
             self.bits[hash] = true;
         }
     }
 
     // returns false if s is definitely not in the set and true if s might be in the set
-    pub fn get<T: Hash>(&self, val: T) -> bool {
+    pub fn get<T: Hash>(&self, val: &T) -> bool {
         for hash in self.hash(val) {
             if !self.bits[hash] {
                 return false;
@@ -45,7 +45,7 @@ impl BloomFilter {
             let mut hasher = hash_function.clone();
             val.hash(&mut hasher);
             let hash = hasher.finish() as usize;
-            hashes.push(hash % self.bits.capacity());
+            hashes.push(hash % self.bits.len());
         }
         hashes
     }

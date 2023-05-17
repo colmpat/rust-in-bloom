@@ -6,12 +6,11 @@ use bloom_filter::BloomFilter;
 impl BloomFilter {
     fn put_print<T: Hash + Debug>(&mut self, val: T) {
         println!("putting {:?}", val);
-        self.put(val);
+        self.put(&val);
     }
 
     fn get_print<T: Hash + Debug>(&mut self, val: T) {
-        println!("getting {:?}", val);
-        println!("{}", self.get(val));
+        println!("getting {:?}: {}", val, self.get(&val));
     }
 }
 
@@ -20,6 +19,9 @@ fn main() {
     let k = 10;
 
     let mut bf = BloomFilter::new(m, k);
+    let test = "hello";
+    bf.put_print(test);
+    bf.get_print(test);
 
     bf.put_print("hello");
     bf.get_print("hello");
