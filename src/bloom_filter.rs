@@ -21,14 +21,14 @@ impl BloomFilter {
         }
     }
 
-    // adds the string to the set
+    // add an elem of type T to the set
     pub fn put<T: Hash>(&mut self, val: &T) {
         for hash in self.hash(val) {
             self.bits[hash] = true;
         }
     }
 
-    // returns false if s is definitely not in the set and true if s might be in the set
+    // check if an elem of type T is in the set
     pub fn get<T: Hash>(&self, val: &T) -> bool {
         for hash in self.hash(val) {
             if !self.bits[hash] {
@@ -38,7 +38,7 @@ impl BloomFilter {
         true
     }
 
-    // returns a vector of indexes into the bit vector for the given string
+    // hash an elem of type T to a list of indices
     fn hash<T: Hash>(&self, val: T) -> Vec<usize> {
         let mut hashes = Vec::new();
         for hash_function in &self.hash_functions {
