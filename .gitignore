@@ -1,1 +1,3 @@
-/target
+target/
+main.dSYM
+Cargo.lock
